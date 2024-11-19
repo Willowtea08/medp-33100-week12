@@ -1,17 +1,31 @@
-var express = require('express');
+const express = require('express');
 const { ObjectId } = require('mongodb');
-var router = express.Router();
+const router = express.Router();
+const connectToDatabase = require('../config/db'); 
 
 /* GET home page. */
-router.get('/', async function(req, res, next) {
+router.get('/', async function (req, res, next) {
   try {
-    const db = req.app.locals.db;
-    const movies = await db.collection('database1').find().toArray();
+    const db = await connectToDatabase(); 
 
-    res.render('index', { database1: database1 });
+    // Fetch data from the three collections
+    const teasCollection = await db.collection('teas').find().toArray(); // Get all teas
+    const usersCollection = await db.collection('users').find().toArray(); // Get all users
+    const commentsCollection = await db.collection('comments').find().toArray(); // Get all comments
+
+    // Pass the collections data to the view
+    res.render('index', {
+      teas: teasCollection,
+      users: usersCollection,
+      comments: commentsCollection,
+    });
   } catch (error) {
-    console.error("Error fetching database1:", error);
-    res.render('index', { database1: [] });
+    console.error("Error fetching data from collections:", error);
+    res.render('index', {
+      teas: [],
+      users: [],
+      comments: [],
+    });
   }
 });
 

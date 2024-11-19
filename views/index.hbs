@@ -1,2 +1,64 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tea, Users, and Comments</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+
+  <div class="section">
+    <h1>Tea Collection</h1>
+    {{#if teas}}
+      <ul>
+        {{#each teas}}
+          <li>
+            <strong>{{this.name}}</strong><br>
+            Type: {{this.type}}<br>
+            Origin: {{this.origin}}<br>
+            Brew Temperature: {{this.brewTemperature}}°C<br>
+            Brew Time: {{this.brewTimeMinutes}} minutes
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>No teas found in the collection.</p>
+    {{/if}}
+  </div>
+
+  <div class="section">
+    <h2>Users</h2>
+    {{#if users}}
+      <ul>
+        {{#each users}}
+          <li>
+            <strong>{{this.name}}</strong><br>
+            Email: {{this.email}}<br>
+            Favorite Tea: {{this.favoriteTea}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>No users found.</p>
+    {{/if}}
+  </div>
+
+  <div class="section">
+    <h2>Comments</h2>
+    {{#if comments}}
+      <div class="comments-container">
+        {{#each comments}}
+          <div class="comment-box">
+            <strong>{{this.username}}</strong>:<br>
+            <p>"{{this.text}}"</p>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p>No comments found.</p>
+    {{/if}}
+  </div>
+
+</body>
+</html>
